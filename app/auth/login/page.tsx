@@ -10,24 +10,27 @@ export default function LoginPage() {
         <TabsTrigger value="signin">Sign In</TabsTrigger>
         <TabsTrigger value="signup">Sign Up</TabsTrigger>
       </TabsList>
-      <Card>
-        <TabsContent value="signin">
+
+      <TabsContent value="signin">
+        <Card>
           <CardHeader className="text-2xl font-bold">
             <CardTitle>Sign In</CardTitle>
           </CardHeader>
           <CardContent>
             <SignInTab />
           </CardContent>
-        </TabsContent>
-        <TabsContent value="signup">
+        </Card>
+      </TabsContent>
+      <TabsContent value="signup">
+        <Card>
           <CardHeader className="text-2xl font-bold">
             <CardTitle>Sign Up</CardTitle>
           </CardHeader>
           <CardContent>
             <SignUpTab />
           </CardContent>
-        </TabsContent>
-      </Card>
+        </Card>
+      </TabsContent>
     </Tabs>
   );
 }
