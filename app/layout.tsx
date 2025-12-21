@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${inter.variable} ${robotoMono.variable} antialiased dark`}
       >
         {children}
-        <Toaster />
+        <Toaster position="top-center" />
       </body>
     </html>
   );

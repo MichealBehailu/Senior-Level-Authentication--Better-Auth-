@@ -25,19 +25,18 @@ import { authClient } from "@/lib/auth-client";
 import { router } from "better-auth/api";
 import { useRouter } from "next/navigation";
 
-const signUpSchema = z.object({
-  name: z.string().min(1),
+const signInSchema = z.object({
   email: z.email().min(1),
   password: z.string().min(6),
 });
 
-type SignUpForm = z.infer<typeof signUpSchema>;
+type SignInForm = z.infer<typeof signInSchema>;
 
-export function SignUpTab() {
-  const form = useForm<SignUpForm>({
-    resolver: zodResolver(signUpSchema),
+export function SignInTab() {
+  const form = useForm<SignInForm>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
-      name: "",
+      
       email: "",
       password: "",
     },
@@ -47,16 +46,16 @@ export function SignUpTab() {
 
   const router = useRouter()
 
-  async function onSubmit(data: SignUpForm) {
-    await authClient.signUp.email(
+  async function HandleSignIn(data: SignInForm) {
+    await authClient.signIn.email(
       { ...data, callbackURL: "/" },
       {
         onError: (error) => {
-          toast.error(error.error.message || "Faild to sign up");
+          toast.error(error.error.message || "Faild to sign in");
         },
         onSuccess: ()=>{
           router.push('/')
-          toast.success("Signed up successfully")
+          toast.success("Signed in successfully")
         }
       }
     );
@@ -64,20 +63,7 @@ export function SignUpTab() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(HandleSignIn)} className="space-y-4">
 
         <FormField
           control={form.control}
@@ -107,7 +93,7 @@ export function SignUpTab() {
           )}
         />
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          <LoadingSwap isLoading={isSubmitting}>Sign Up</LoadingSwap>
+          <LoadingSwap isLoading={isSubmitting}>Sign In</LoadingSwap>
         </Button>
       </form>
     </Form>
