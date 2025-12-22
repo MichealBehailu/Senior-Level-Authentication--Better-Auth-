@@ -6,6 +6,9 @@ export const auth = betterAuth({
     emailAndPassword: { 
     enabled: true, 
   },
+  // rateLimit:{ //is a protection mechanism that limits how many times an action can be performed within a certain time window.
+  //   storage : "database"
+  // },
   session: { //cache the use session
     cookieCache:{
       enabled:true,
