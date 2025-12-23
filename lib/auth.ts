@@ -9,6 +9,18 @@ export const auth = betterAuth({
   // rateLimit:{ //is a protection mechanism that limits how many times an action can be performed within a certain time window.
   //   storage : "database"
   // },
+
+  socialProviders:{
+    github : {
+      clientId : process.env.GITHUB_CLIENT_ID!,
+      clientSecret : process.env.GITHUB_CLIENT_SECRET!
+    },
+    discord :{
+      clientId : process.env.DISCORD_CLIENT_ID!,
+      clientSecret : process.env.DISCORD_CLIENT_SECRET! //this secret never goes to the browser
+    }
+  },
+ 
   session: { //cache the use session
     cookieCache:{
       enabled:true,
@@ -22,3 +34,4 @@ export const auth = betterAuth({
 
     // Next.js cookies are handled automatically by toNextJsHandler //so no need to set pulgins:[nextCookies()]
 });
+    // Next.js cookies are handled automatically by toNextJsHandler //so no need to set pulgins:[nextCookies()]

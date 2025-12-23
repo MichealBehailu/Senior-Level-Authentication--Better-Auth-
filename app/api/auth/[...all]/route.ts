@@ -32,32 +32,31 @@ const authHandlers = toNextJsHandler(auth);
 
 export const { GET } = authHandlers;
 
-export async function POST(request:Request) {
-    const clonedRequest = request.clone()
-    const decision = await checkArcjet(request)
-
-    if(decision.isDenied()){
-        if(decision.reason.isRateLimit()){
-            return Response.json({error : null}, {status : 429})
-        }else if(decision.reason.isEmail()){
-            let message : string
-
-            if(decision.reason.emailTypes.includes("INVALID")){
-                message = "Email address format is invalid"
-            }else if(decision.reason.emailTypes.includes("DISPOSABLE")){
-                message = "Disposable email addresses are not allowed"
-            }else if(decision.reason.emailTypes.includes("NO_MX_RECORDS")){
-                message = "Email domain is not valid"
-            }else{
-                message = "Invalid email"
+// In app/api/auth/[...all]/route.ts
+export async function POST(request: Request) {
+    const url = new URL(request.url);
+    const path = url.pathname;
+    
+    // Clone the request for potential re-use
+    const clonedRequest = request.clone();
+    
+    // Handle sign-in and sign-up with ArcJet protection
+    if (path.endsWith('/signin') || path.endsWith('/sign-up')) {
+        const decision = await checkArcjet(request);
+        
+        if (decision.isDenied()) {
+            if (decision.reason.isRateLimit()) {
+                return Response.json({ error: "Too many requests" }, { status: 429 });
+            } else if (decision.reason.isEmail()) {
+                // ... handle email validation errors ...
+                return Response.json({ message: "Invalid email" }, { status: 400 });
             }
-
-            return Response.json({message}, {status : 400})
-        }else{
-            return new Response(null, {status : 403})
+            return new Response(null, { status: 403 });
         }
     }
-    return authHandlers.POST(clonedRequest)
+    
+    // Forward the request to the auth handlers
+    return authHandlers.POST(clonedRequest);
 } 
 
 async function checkArcjet(request :Request) { //takes all requests and to check
