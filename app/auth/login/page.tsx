@@ -60,3 +60,5 @@ export default function LoginPage() {
     </Tabs>
   );
 }
+
+//for shit check this mostly on handling the redirect based on the session https://chatgpt.com/s/t_694aa9134aac81919e669361fc8d8aa3 

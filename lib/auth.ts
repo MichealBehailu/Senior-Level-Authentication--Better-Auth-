@@ -5,11 +5,21 @@ import { db } from "@/drizzle/db"; // your drizzle instance
 export const auth = betterAuth({
     emailAndPassword: { 
     enabled: true, 
+    requireEmailVerification:true,
+    sendResetPassword: async ({user, url})=>{
+      await sendPasswordResetEmail({user, url})
+    }
   },
   // rateLimit:{ //is a protection mechanism that limits how many times an action can be performed within a certain time window.
   //   storage : "database"
   // },
-
+  emailVerification:{
+    autoSignInAfterVerification:true,
+    sendOnSignUp:true,
+    sendVerificationEmail: async ({user, url})=>{
+      await sendEmailVerificationEmail({user, url})
+    }
+  },
   socialProviders:{
     github : {
       clientId : process.env.GITHUB_CLIENT_ID!,
@@ -34,4 +44,12 @@ export const auth = betterAuth({
 
     // Next.js cookies are handled automatically by toNextJsHandler //so no need to set pulgins:[nextCookies()]
 });
+
+function sendPasswordResetEmail(arg0: { user: { id: string; createdAt: Date; updatedAt: Date; email: string; emailVerified: boolean; name: string; image?: string | null | undefined; }; url: string; }) {
+  throw new Error("Function not implemented.");
+}
+
+function sendEmailVerificationEmail(arg0: { user: { id: string; createdAt: Date; updatedAt: Date; email: string; emailVerified: boolean; name: string; image?: string | null | undefined; }; url: string; }) {
+  throw new Error("Function not implemented.");
+}
     // Next.js cookies are handled automatically by toNextJsHandler //so no need to set pulgins:[nextCookies()]
