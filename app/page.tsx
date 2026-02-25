@@ -13,7 +13,7 @@ export default function Home() {
     <div className="my-6 px-4 max-w-md mx-auto">
       <div className="text-center space-y-6">
 
-        {session === null ? ( //if the session is null, the user is not logged in
+        {session === null ? ( //if the session is null or no user session, the user is not logged in
           <>
             <h1 className="text-3xl font-bold">Welcome to Our App</h1>
             <Button asChild size={"lg"}>
