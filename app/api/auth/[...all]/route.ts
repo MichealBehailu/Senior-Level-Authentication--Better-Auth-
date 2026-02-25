@@ -3,7 +3,7 @@ import { toNextJsHandler } from "better-auth/next-js";
 import arcjet, { BotOptions, EmailOptions, SlidingWindowRateLimitOptions, detectBot, protectSignup, shield, slidingWindow } from '@arcjet/next' //import the arcjet here
 import { findIp } from "@arcjet/ip";
 
-const aj =arcjet({
+const aj =arcjet({ //this is arcjet setup
     key : process.env.ARCJET_API_KEY!,
     characteristics: ['userIdorIp'],//we can ratelimit
     rules : [shield({mode: "LIVE"})], //protect us from bots, sql injection
@@ -13,7 +13,7 @@ const botSetting ={mode :"LIVE", allow :[]} satisfies BotOptions //when the allo
 
 const restrictiveRateLimitSettngs = { //this allows us to prevent bruteforce and any other when the user sign in or sign up
     mode: "LIVE",
-    max : 10,
+    max : 10, //set limit to 10
     interval:"10m"
 } as SlidingWindowRateLimitOptions<[]>
 
