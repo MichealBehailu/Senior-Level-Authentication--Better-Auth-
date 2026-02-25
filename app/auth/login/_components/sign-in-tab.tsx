@@ -37,6 +37,10 @@ export function SignInTab({
 }: {
   openEmailVerificationTab: (email: string) => void
 }) {
+
+  //we can use useTransition // to get teh pending and  to disable the buttons when submitting , easy to use 
+  //const [emailPending , startEmailTransition ] = useTransition()
+  
   const form = useForm<SignInForm>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
